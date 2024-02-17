@@ -2,9 +2,8 @@ const tabuleiro = document.querySelector("#tabuleiro");
 const campos = Array.from(document.querySelectorAll(".campo"));
 const matriz = [1,2,3,4,5,6,7,8,9];
 const temFilhos =  elemento => elemento.hasChildNodes();
-const temX = campo => campo.childNodes[0].getAttribute("data-conteudo") == "X";
-const temO = campo => campo.childNodes[0].getAttribute("data-conteudo") == "O";
 let xOuCircle = false;
+let vencedor = false;
 
 campos.forEach((campo, indice) =>
 {
@@ -52,10 +51,16 @@ function selecionarCampo(campo, indice)
 
 function reiniciar()
 {
-    if(campos.every((campo) => campo.hasChildNodes()))
+    if(campos.every(temFilhos) || vencedor)
     {
         window.location.reload();
     }
+}
+
+function anunciarVencedor(jogadorVencedor)
+{
+    console.log("O jogador " + jogadorVencedor + " venceu1.");
+    vencedor = true;
 }
 
 function verificarMatriz()
@@ -64,20 +69,20 @@ function verificarMatriz()
     {
         if(matriz[c] == matriz[c + 1] && matriz[c + 1] == matriz[c + 2])
         {
-            console.log("O jogador " + matriz[c] + " venceu.");
+            anunciarVencedor(matriz[c]);
         }
         else if(matriz[c] == matriz[c + 3] && matriz[c + 3] == matriz[c + 6])
         {
-            console.log("O jogador " + matriz[c] + " venceu.");
-        }
-        else if(matriz[c] == matriz[c + 2] && matriz[c + 2] == matriz[c + 4])
-        {
-            console.log("O jogador " + matriz[c] + " venceu.");
+            anunciarVencedor(matriz[c]);
         }
         else if(matriz[c] == matriz[c + 4] && matriz[c + 4] == matriz[c + 8])
         {
-            console.log("O jogador " + matriz[c] + " venceu.");
+            anunciarVencedor(matriz[c]);
         }
-        
+        else if( c == 2 && matriz[c] == matriz[c + 2] && matriz[c + 2] == matriz[c + 4])
+        {
+            anunciarVencedor(matriz[c]);
+        }
+        reiniciar();
     }
 }
