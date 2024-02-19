@@ -4,14 +4,12 @@ const SpeechRecognition =
   window.SpeechGrammarList || window.webkitSpeechGrammarList; 
 
   let recognitionAtivo = false;
-  const casas = "#JSGF V1.0; grammar casas; public <casas> = A1 | A2 | A3;";
   const recognition = new SpeechRecognition();
-  const speechRecognitionList = new SpeechGrammarList();
-  const matrizPossibilidades = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"];
-  speechRecognitionList.addFromString(casas, 1);
-  recognition.grammars = speechRecognitionList;
+  const matrizPossibilidades = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
   recognition.continuous = true;
-  recognition.lang = "en-US";
+  recognition.lang = "pt-BR";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 5;
   recognition.start();
   recognitionAtivo = true;
 
@@ -19,9 +17,9 @@ const SpeechRecognition =
 
   function onSpeak(evento)
   {
-    let chute = evento.results[evento.results.length - 1][0].transcript.replaceAll(" ", "").toUpperCase();
+    let chute = evento.results[evento.results.length - 1];
     chute =  verificarEConverter(chute);
-    console.log(chute);
+    console.log(evento);
     validar(chute);
     reiniciar();
   }
@@ -36,9 +34,16 @@ const SpeechRecognition =
   {
     matrizPossibilidades.forEach((valor, indice) =>
     {
-      if(valor == chute)
+      for(let i = 0; i < chute.length; i++)
       {
-        selecionarCampo(campos[indice], indice);
+        let alternativa = chute[i].transcript.replaceAll(" ", "");
+        if(valor == alternativa)
+        {
+          console.log(alternativa);
+          selecionarCampo(campos[indice], indice);
+          return;
+        }
       }
     });
   }
+ 
