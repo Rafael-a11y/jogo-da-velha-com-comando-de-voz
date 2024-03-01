@@ -19,17 +19,11 @@ const SpeechRecognition =
   function onSpeak(evento)
   {
     let chute = evento.results[evento.results.length - 1];
-    chute =  verificarEConverter(chute);
     console.log(evento);
     validar(chute);
     reiniciar();
   }
 
-  function verificarEConverter(chute)
-  {
-    chute = (chute == "81" ? "A1" : chute == "82" ? "A2" : chute == "83" ? "A3" : chute);
-    return chute;
-  }
 
   function validar(chute)
   {

@@ -1,13 +1,21 @@
 const tabuleiro = document.querySelector("#tabuleiro");
 const campos = Array.from(document.querySelectorAll(".campo"));
-const matriz = [1,2,3,4,5,6,7,8,9];
+const matriz = [new Array(3), new Array(3), new Array(3)];
 const temFilhos =  elemento => elemento.hasChildNodes();
 let xOuCircle = false;
+let imgX;
+let imgCircle;
 let vencedor = false;
+let linha;
+let coluna;
 
 campos.forEach((campo, indice) =>
 {
-    campo.addEventListener("click", () => {selecionarCampo(campo, indice);});
+    campo.addEventListener("click", () => 
+    {
+        gerarOOuX();
+        selecionarCampo(campo, indice);
+    });
 });
 
 document.addEventListener("click", () => 
@@ -15,11 +23,10 @@ document.addEventListener("click", () =>
     reiniciar();
 });
 
-function selecionarCampo(campo, indice)
+function gerarOOuX()
 {
-    const imgX = document.createElement("img");
-    const imgCircle = document.createElement("img");
-
+    imgX = document.createElement("img");
+    imgCircle = document.createElement("img");
     imgX.setAttribute("src", `./assets/x.svg`);
     imgX.setAttribute("alt", `ícone de X`);
     imgX.setAttribute("data-conteudo", "X");
@@ -29,32 +36,56 @@ function selecionarCampo(campo, indice)
     imgCircle.setAttribute("alt",`ícone de O`);
     imgCircle.setAttribute("data-conteudo", "O");
     imgCircle.classList.add("centralizado");
+}
 
-    if(campo.childNodes.length > 0)
-    {
-        campo.innerHTML = "";
-    }
-    if(xOuCircle)
-    {
-        matriz[indice] = "X"
-        campo.append(imgX);
-    }
-    else
-    {
-        matriz[indice] = "O";
-        campo.append(imgCircle);
-    }
+function selecionarCampo(campo, indice)
+{
+    definirLinhaEColuna(indice);
+    inserirXOuO(campo);
     verificarMatriz();
-    xOuCircle = !xOuCircle;
+}
+
+function definirLinhaEColuna(indice)
+{
+    linha = (indice >= 0 && indice <=2 ) ? 0 : 
+        (indice >= 3 && indice <= 5) ? 1 : 2;
+
+    coluna = (linha == 0) ? indice :
+        (linha == 1) ? indice - 3 : indice - 6;
+}
+
+function verificarSeIndiceNaMatrizEstaVago()
+{
+    if(matriz[linha][coluna] == null)
+    {
+        return true;
+    }
+    return false;
+}
+
+function inserirXOuO(campo)
+{
+    let valorParaInserirNaMatriz = xOuCircle == true ? "X" : "O";
+    let imagemParaInserirNaTela =  xOuCircle == true ? imgX : imgCircle;
+    if(verificarSeIndiceNaMatrizEstaVago() && campo.childNodes.length == 0)
+    {
+        matriz[linha][coluna] = valorParaInserirNaMatriz;
+        campo.append(imagemParaInserirNaTela);
+        xOuCircle = !xOuCircle
+    }
     console.log(matriz);
 }
 
-function reiniciar()
+function verificarMatriz()
 {
-    if(campos.every(temFilhos) || vencedor)
+    for(let l = 0; l < matriz.length; l++)
     {
-        window.location.reload();
+        if(matriz[l][0] == matriz[l][1] && matriz[l][1] == matriz[l][2]) anunciarVencedor();
+        else if(matriz[0][l] == matriz[1][l] && matriz[1][l] == matriz[2][l]) anunciarVencedor();
+        else if(matriz[0][0] == matriz[1][1] && matriz[1][1] == matriz[2][2]) anunciarVencedor();
+        else if(matriz[0][2] == matriz[1][1] && matriz[1][1] == matriz[2][0]) anunciarVencedor();
     }
+    reiniciar();
 }
 
 function anunciarVencedor(jogadorVencedor)
@@ -63,26 +94,10 @@ function anunciarVencedor(jogadorVencedor)
     vencedor = true;
 }
 
-function verificarMatriz()
+function reiniciar()
 {
-    for(let c = 0; c < matriz.length; c++)
+    if(campos.every(temFilhos) || vencedor)
     {
-        if(matriz[c] == matriz[c + 1] && matriz[c + 1] == matriz[c + 2])
-        {
-            anunciarVencedor(matriz[c]);
-        }
-        else if(matriz[c] == matriz[c + 3] && matriz[c + 3] == matriz[c + 6])
-        {
-            anunciarVencedor(matriz[c]);
-        }
-        else if(matriz[c] == matriz[c + 4] && matriz[c + 4] == matriz[c + 8])
-        {
-            anunciarVencedor(matriz[c]);
-        }
-        else if( c == 2 && matriz[c] == matriz[c + 2] && matriz[c + 2] == matriz[c + 4])
-        {
-            anunciarVencedor(matriz[c]);
-        }
-        reiniciar();
+        window.location.reload();
     }
 }
