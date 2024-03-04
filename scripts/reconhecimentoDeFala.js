@@ -3,11 +3,14 @@ const SpeechRecognition =
   const SpeechGrammarList =
   window.SpeechGrammarList || window.webkitSpeechGrammarList; 
 
-  let recognitionAtivo = false;
   const recognition = new SpeechRecognition();
-  const matrizPossibilidades = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
+  const gramaticaDeReconhecimentoDeFala = new SpeechGrammarList();
+  const matrizPossibilidades = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"];
+  const gramatica = '#JSGF V1.0; grammar casas; public <casa> = ' + matrizPossibilidades.join(' | ') + ' ;';
+
+  gramaticaDeReconhecimentoDeFala.addFromString(gramatica, 1);
+  recognition.grammars = gramaticaDeReconhecimentoDeFala;
   recognition.lang = "pt-BR";
-  // recognition.continuous = true;
   recognition.interimResults = false;
   recognition.maxAlternatives = 5;
   recognition.start();
@@ -21,7 +24,6 @@ const SpeechRecognition =
     let chute = evento.results[evento.results.length - 1];
     console.log(evento);
     validar(chute);
-    reiniciar();
   }
 
 

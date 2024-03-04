@@ -11,17 +11,26 @@ let coluna;
 
 campos.forEach((campo, indice) =>
 {
-    campo.addEventListener("click", () => 
+    campo.addEventListener("click", (event) => 
     {
-        gerarOOuX();
-        selecionarCampo(campo, indice);
+        
+        if (verificarSeEstaDentroDoQuadrado(event, campo))
+        {
+            console.log("Dentro do quadrado");
+            selecionarCampo(campo, indice);
+        }
+        
     });
 });
 
-document.addEventListener("click", () => 
+function verificarSeEstaDentroDoQuadrado(evento, campo)
 {
-    reiniciar();
-});
+    const rect = campo.getBoundingClientRect();
+    const limiteBorda = 5;
+    const x = evento.clientX - rect.left;
+    const y = evento.clientY - rect.top;
+    if (x > limiteBorda && x < rect.width - limiteBorda && y > limiteBorda && y < rect.height - limiteBorda) return true;
+}
 
 function gerarOOuX()
 {
@@ -40,9 +49,17 @@ function gerarOOuX()
 
 function selecionarCampo(campo, indice)
 {
+    gerarOOuX();
     definirLinhaEColuna(indice);
     inserirXOuO(campo);
     verificarMatriz();
+    if(vencedor)
+    {
+        anunciarVencedor();
+        reiniciar();
+    }
+    console.log("chegou aqui");
+    alternarXOuCircle();
 }
 
 function definirLinhaEColuna(indice)
@@ -71,27 +88,45 @@ function inserirXOuO(campo)
     {
         matriz[linha][coluna] = valorParaInserirNaMatriz;
         campo.append(imagemParaInserirNaTela);
-        xOuCircle = !xOuCircle
     }
-    console.log(matriz);
+}
+
+function alternarXOuCircle()
+{
+    xOuCircle = !xOuCircle;
 }
 
 function verificarMatriz()
 {
     for(let l = 0; l < matriz.length; l++)
     {
-        if(matriz[l][0] == matriz[l][1] && matriz[l][1] == matriz[l][2]) anunciarVencedor();
-        else if(matriz[0][l] == matriz[1][l] && matriz[1][l] == matriz[2][l]) anunciarVencedor();
-        else if(matriz[0][0] == matriz[1][1] && matriz[1][1] == matriz[2][2]) anunciarVencedor();
-        else if(matriz[0][2] == matriz[1][1] && matriz[1][1] == matriz[2][0]) anunciarVencedor();
+        const casasHorizontais = [matriz[l][0], matriz[l][1], matriz[l][2]];
+        const casasVerticais = [matriz[0][l], matriz[1][l], matriz[2][l]];
+        const casasDiagonaisParaDireita = [matriz[0][0], matriz[1][1], matriz[2][2]];
+        const casasDiagonaisParaEsquerda = [matriz[0][2], matriz[1][1], matriz[2][0]];
+        const possiveisResultados = [casasHorizontais, casasVerticais, casasDiagonaisParaDireita, casasDiagonaisParaEsquerda];
+        if(verificarPontuacao(possiveisResultados))
+        {
+            definirVencedor(true);
+        }
     }
-    reiniciar();
+
 }
 
-function anunciarVencedor(jogadorVencedor)
+function verificarPontuacao(arrayComQuatroArrays)
 {
-    console.log("O jogador " + jogadorVencedor + " venceu1.");
-    vencedor = true;
+    return arrayComQuatroArrays.some(array => verificarSeValoEValido(array) && verficarSeSaoIguais(array));
+}
+
+function definirVencedor(booleano)
+{
+    vencedor = booleano;
+}
+
+function anunciarVencedor()
+{
+    if(xOuCircle) console.log("O jogador X venceu.");
+    else console.log("O jogador O venceu.");
 }
 
 function reiniciar()
@@ -100,4 +135,26 @@ function reiniciar()
     {
         window.location.reload();
     }
+}
+
+function verificarSeValoEValido(arrayComValoresASeremComparados)
+{
+    if(arrayComValoresASeremComparados.every(valor => valor != undefined && valor != null && valor != "" && valor != NaN))
+    {
+        return true;
+    }
+    return false;
+}
+
+function verficarSeSaoIguais(arrayComValoresASeremComparados)
+{
+    if(arrayComValoresASeremComparados.every(valor => valor === "X"))
+    {
+        return true;
+    }
+    else if(arrayComValoresASeremComparados.every(valor => valor === "O"))
+    {
+        return true;
+    }
+    return false;
 }
