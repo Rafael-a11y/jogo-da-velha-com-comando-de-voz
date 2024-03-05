@@ -82,3 +82,10 @@ main
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.modal-body__video-tutorial
+{
+    width: 100%;
+    height: 300px;
+    border: 4px solid black;
+}
