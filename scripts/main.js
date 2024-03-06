@@ -55,9 +55,10 @@ function selecionarCampo(campo, indice)
     verificarMatriz();
     if(vencedor)
     {
-        anunciarVencedor();
-        reiniciar();
+        definirPontuacao(xOuCircle);
+        return;
     }
+    reiniciar();
     console.log("chegou aqui");
     alternarXOuCircle();
 }
@@ -121,12 +122,6 @@ function verificarPontuacao(arrayComQuatroArrays)
 function definirVencedor(booleano)
 {
     vencedor = booleano;
-}
-
-function anunciarVencedor()
-{
-    if(xOuCircle) console.log("O jogador X venceu.");
-    else console.log("O jogador O venceu.");
 }
 
 function reiniciar()
