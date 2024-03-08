@@ -81,7 +81,11 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <form class="fw-bold fs-5">
+                            <input type="checkbox" id="checkbox-tutorial">
+                            <label for="checkbox-tutorial">Não mostrar tutorial novamente</label>
+                        </form>
+                    <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Fechar</button>
                     <!-- <button type="button" class="btn btn-primary">Understood</button> -->
                     </div>
                 </div>
@@ -97,10 +101,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        X e O
+                        <div class="d-flex justify-content-evenly align-items-center">
+                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                <h2>O</h2>
+                                <strong class="fs-2" id="pontuacao-o">0</strong>
+                            </div>
+                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                <h2>X</h2>
+                                <strong class="fs-2" id="pontuacao-x">0</strong>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                 </div>
                 </div>

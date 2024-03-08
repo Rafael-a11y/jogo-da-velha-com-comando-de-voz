@@ -89,3 +89,8 @@ main
     height: 300px;
     border: 4px solid black;
 }
+
+.modal-footer
+{
+    justify-content: space-between;
+}
