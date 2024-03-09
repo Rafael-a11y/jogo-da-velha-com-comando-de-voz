@@ -18,6 +18,12 @@ main
     grid-template-columns: 6rem auto auto 6rem;
     grid-template-rows: 6rem auto auto 6rem;
     position: relative;
+
+    @media screen and (max-width: 480px)
+    {
+        grid-template-columns: 3rem auto auto 3rem;
+        grid-template-rows: 3rem auto auto 3rem;
+    }
 }
 
 #coluna-letras,#coluna-numeros

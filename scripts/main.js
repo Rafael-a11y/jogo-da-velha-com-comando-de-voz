@@ -23,13 +23,23 @@ campos.forEach((campo, indice) =>
     });
 });
 
+document.addEventListener("keydown", (evento) =>
+{
+    let teclaNumerica = parseInt(evento.key);
+    if(teclaNumerica >= 1 && teclaNumerica <= 9)
+    {
+        selecionarCampo(campos[teclaNumerica - 1], teclaNumerica - 1);
+    }
+});
+
 function verificarSeEstaDentroDoQuadrado(evento, campo)
 {
     const rect = campo.getBoundingClientRect();
     const limiteBorda = 5;
     const x = evento.clientX - rect.left;
     const y = evento.clientY - rect.top;
-    if (x > limiteBorda && x < rect.width - limiteBorda && y > limiteBorda && y < rect.height - limiteBorda) return true;
+    if (x > limiteBorda && x < rect.width - limiteBorda && y > limiteBorda && y < rect.height - limiteBorda)
+     return true;
 }
 
 function gerarOOuX()
