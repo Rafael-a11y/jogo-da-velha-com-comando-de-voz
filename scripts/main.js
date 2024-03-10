@@ -23,14 +23,17 @@ campos.forEach((campo, indice) =>
     });
 });
 
-document.addEventListener("keydown", (evento) =>
+function adicionarOuvinteDeTeclado()
 {
-    let teclaNumerica = parseInt(evento.key);
-    if(teclaNumerica >= 1 && teclaNumerica <= 9)
+    document.addEventListener("keydown", (evento) =>
     {
-        selecionarCampo(campos[teclaNumerica - 1], teclaNumerica - 1);
-    }
-});
+        let teclaNumerica = parseInt(evento.key);
+        if(teclaNumerica >= 1 && teclaNumerica <= 9)
+        {
+            selecionarCampo(campos[teclaNumerica - 1], teclaNumerica - 1);
+        }
+    });
+}
 
 function verificarSeEstaDentroDoQuadrado(evento, campo)
 {
