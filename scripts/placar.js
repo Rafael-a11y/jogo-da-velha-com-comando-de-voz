@@ -1,8 +1,9 @@
 const placar = JSON.parse(sessionStorage.getItem("pontuacao")) || [{jogador: "O", pontuacao: 0}, {jogador: "X", pontuacao: 0}];
 
-function definirPontuacao(jogadorQueJogouPorUltimo)
+function definirPontuacao()
 {
-    let vencedorDaVez = (jogadorQueJogouPorUltimo == true ? {jogador: "X"} : {jogador: "O"});   
+    let vencedorDaVez = (xOuCircle == true ? {jogador: "X"} : {jogador: "O"});   
+    
     if(placar.length > 0)
     {
         placar.forEach((competidor) => 

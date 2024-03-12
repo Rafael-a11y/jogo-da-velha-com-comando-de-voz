@@ -16,7 +16,6 @@ campos.forEach((campo, indice) =>
         
         if (verificarSeEstaDentroDoQuadrado(event, campo))
         {
-            console.log("Dentro do quadrado");
             selecionarCampo(campo, indice);
         }
         
@@ -33,6 +32,7 @@ function adicionarOuvinteDeTeclado()
             selecionarCampo(campos[teclaNumerica - 1], teclaNumerica - 1);
         }
     });
+    
 }
 
 function verificarSeEstaDentroDoQuadrado(evento, campo)
@@ -47,32 +47,40 @@ function verificarSeEstaDentroDoQuadrado(evento, campo)
 
 function gerarOOuX()
 {
-    imgX = document.createElement("img");
-    imgCircle = document.createElement("img");
-    imgX.setAttribute("src", `./assets/x.svg`);
-    imgX.setAttribute("alt", `ícone de X`);
-    imgX.setAttribute("data-conteudo", "X");
-    imgX.classList.add("centralizado");
-    
-    imgCircle.setAttribute("src",`./assets/circle.svg`);
-    imgCircle.setAttribute("alt",`ícone de O`);
-    imgCircle.setAttribute("data-conteudo", "O");
-    imgCircle.classList.add("centralizado");
+    if(xOuCircle)
+    {
+        imgX = document.createElement("img");
+        imgX.setAttribute("src", `./assets/x.svg`);
+        imgX.setAttribute("alt", `ícone de X`);
+        imgX.setAttribute("data-conteudo", "X");
+        imgX.classList.add("centralizado");
+    }
+    else
+    {
+        imgCircle = document.createElement("img");
+        imgCircle.setAttribute("src",`./assets/circle.svg`);
+        imgCircle.setAttribute("alt",`ícone de O`);
+        imgCircle.setAttribute("data-conteudo", "O");
+        imgCircle.classList.add("centralizado");
+    }
 }
 
 function selecionarCampo(campo, indice)
 {
+    if(campo.childNodes.length > 0)
+    {
+        return;
+    }
     gerarOOuX();
     definirLinhaEColuna(indice);
     inserirXOuO(campo);
     verificarMatriz();
     if(vencedor)
     {
-        definirPontuacao(xOuCircle);
+        definirPontuacao();
         return;
     }
     reiniciar();
-    console.log("chegou aqui");
     alternarXOuCircle();
 }
 

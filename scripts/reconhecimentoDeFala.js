@@ -29,7 +29,6 @@ const SpeechRecognition =
   function onSpeak(evento)
   {
     let chute = evento.results[evento.results.length - 1];
-    console.log(evento);
     validar(chute);
   }
 
@@ -51,10 +50,8 @@ const SpeechRecognition =
       {
         let alternativa = chute[i].transcript.replaceAll(" ", "").replaceAll(".", "").toUpperCase();
         alternativa = alternativa.includes("UM") ? alternativa.replaceAll("UM", "1") : alternativa;
-        console.log(alternativa);
         if(valor == alternativa)
         {
-          console.log(alternativa);
           selecionarCampo(campos[indice], indice);
           return;
         }

@@ -2,14 +2,13 @@
 let placarO = document.querySelector("#pontuacao-o");
 let placarX = document.querySelector("#pontuacao-x");
 let exibeTutorial = sessionStorage.getItem("exibir-tutorial") || "true";
+let tutorialFechado = true;
 const options = {keyboard: false, backdrop: "static", focus: true};
 const modalTutorial = new bootstrap.Modal('#tutorialBackdrop', options);
 const modalTutorialDOM = document.querySelector("#tutorialBackdrop");
 const modalPlacar = new bootstrap.Modal("#placarModal", options);
 const modalPlacarDOM = document.getElementById("placarModal");
 const checkbox = document.querySelector("#checkbox-tutorial");
-console.log(checkbox);
-
 modalTutorialDOM.addEventListener("hidden.bs.modal", () => 
 {
     iniciarCapturaDeVoz();
@@ -22,12 +21,10 @@ const naoMostrarTutorialNovamente = () =>
 {
     if(checkbox.checked)
     {
-        console.log("checkbox marcado");
         sessionStorage.setItem("exibir-tutorial", false);
     }
     else
     {
-        console.log("checkbox desmarcado")
         sessionStorage.setItem("exibir-tutorial", true);
     }
 }
@@ -42,7 +39,7 @@ function exibirModalDeTutorial()
     }
     else
     {
-        console.log("tutrorial bloqueado")
+        adicionarOuvinteDeTeclado();
     }
     
 }
