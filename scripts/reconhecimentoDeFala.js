@@ -13,7 +13,7 @@ const SpeechRecognition =
   // recognition.grammars = gramaticaDeReconhecimentoDeFala;
   recognition.lang = "pt-BR";
   recognition.interimResults = false;
-  recognition.maxAlternatives = 5;
+  recognition.maxAlternatives = 10;
   
   
   recognition.addEventListener("result", onSpeak);
@@ -29,6 +29,7 @@ const SpeechRecognition =
   function onSpeak(evento)
   {
     let chute = evento.results[evento.results.length - 1];
+    console.log(chute);
     validar(chute);
   }
 
