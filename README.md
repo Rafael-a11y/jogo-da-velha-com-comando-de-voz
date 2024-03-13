@@ -18,7 +18,7 @@
   usuário.</li>
 </ul>
 
-https://github.com/Rafael-a11y/jogo-da-velha-com-comando-de-voz/assets/63820646/03ef120b-4c33-4953-b908-ac8ff8116e43
+https://github.com/Rafael-a11y/jogo-da-velha-com-comando-de-voz/assets/63820646/3675d18c-a09f-4750-91de-86dcbaf0161d
 
 # 📁 Acesso ao projeto
 
